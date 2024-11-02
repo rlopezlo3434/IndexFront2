@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,15 +10,20 @@ import { Router } from '@angular/router';
 export class DashboardComponent implements OnInit {
 
   cliente: any = {};
-  constructor(private router: Router) {
+  constructor(private router: Router, private toastr: ToastrService) {
     
   }
 
   ngOnInit(): void {
     this.obtenerDetalleUsuario();
+    this.showSuccess();
   }
   click(){
     this.router.navigate(['dashboard/reporte']);
+  }
+
+  showSuccess() {
+    this.toastr.success('Bienvenido!', 'Index!');
   }
 
   obtenerDetalleUsuario() {

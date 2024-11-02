@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { clippingParents } from '@popperjs/core';
 import { ReporteService } from '../reporte/reporte.service';
+import { ToastrService } from 'ngx-toastr';
+
+
 @Component({
   selector: 'app-asesores',
   templateUrl: './asesores.component.html',
@@ -27,7 +30,7 @@ export class AsesoresComponent {
   selectedFile: any = null;
 
   asesoreslist: any[] = [];
-  constructor(private reportService: ReporteService) {
+  constructor(private reportService: ReporteService, private toastr: ToastrService) {
 
   }
   ngOnInit(): void {
@@ -96,10 +99,13 @@ export class AsesoresComponent {
         next: (response: any) => {
           console.log('registrado', response);
           this.clienteForm.reset();
+          this.toastr.success('Registro de Asesor Exitoso!', 'Index!');
           this.obtenerAsesores();
         },
         error: (error) => {
           console.error('Login failed', error);
+          this.toastr.error('Fallo al registrar un Asesor!', 'Index!');
+
         }
       });
     }

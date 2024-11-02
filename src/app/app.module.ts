@@ -26,6 +26,9 @@ import { DetalleUsuarioComponent } from './Pages/detalle-usuario/detalle-usuario
 import { AnalisisComponent } from './Pages/analisis/analisis.component';
 import { BaseChartDirective } from 'ng2-charts';
 import { AsesoresComponent } from './Pages/asesores/asesores.component';
+import { provideToastr } from 'ngx-toastr';
+import { ToastrModule } from 'ngx-toastr';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,9 +56,10 @@ import { AsesoresComponent } from './Pages/asesores/asesores.component';
     MatSidenavModule,
     MatSelectModule,
     MatFormFieldModule,
-    MatListModule
+    MatListModule,
+    ToastrModule.forRoot(),
   ],
-  providers: [],
+  providers: [provideToastr()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
