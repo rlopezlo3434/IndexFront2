@@ -1,0 +1,196 @@
+.container {
+    margin: 0px;
+}
+
+h2,
+h3 {
+    color: #6E6893;
+    text-align: start;
+}
+
+
+.search-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 20px 12px 40px;
+    border: 1px solid #D3D3D3;
+    border-radius: 8px;
+    background-color: #F5F5FF;
+    font-size: 16px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+    top: 60%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #8A8AAB;
+}
+
+.filter-icon {
+    font-size: 20px;
+}
+
+
+/* tabla */
+table.mat-elevation-z2 {
+    border-radius: 10px;
+    overflow: hidden;
+    border-collapse: separate;
+}
+
+.table-container {
+    margin: 20px;
+    border-radius: 8px;
+}
+
+.table-container  td{
+    font-size: 12px;
+}
+
+
+.table-container th {
+    background: #F2F2F2;
+    color: #6E6893;
+    text-align: center;
+    padding: 10px;
+}
+
+.table-container td {
+    text-align: center;
+}
+
+.mat-header-cell {
+    font-weight: bold;
+}
+
+.estado-label.activo {
+    color: green;
+    font-weight: bold;
+}
+
+.estado-label.cancelado {
+    color: red;
+    font-weight: bold;
+}
+
+.estado-vencimiento.por-vencer {
+    color: orange;
+}
+
+.summary-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.summary-text {
+    font-weight: bold;
+}
+
+.summary-amount {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+/* sidenav */
+
+.sidenav-container {
+    height: 100vh;
+}
+
+.filter-sidenav {
+    width: 300px;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.main-content {
+    padding: 16px;
+}
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.fill{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+
+
+
+.buttonNewCliente {
+    background-color: #DFAC2C;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: calc(100%);
+    padding: 5px;
+    /* Ancho total menos el espacio en los lados */
+    /* Espacio en los lados del botón */
+}
+
+.custom-paginator {
+    display: flex;
+    justify-content: space-between; /* Espacia los elementos a los extremos */
+    align-items: center;
+    background-color: transparent;
+}
+
+.custom-paginator .mat-paginator-page-size,
+.custom-paginator .mat-paginator-range-label {
+    order: -1; /* Coloca el número de páginas a la izquierda */
+}
+
+.custom-paginator .mat-paginator-navigation {
+    order: 1; /* Coloca las flechas de navegación a la derecha */
+}
+
+.rowefect:hover {
+    transition: box-shadow 0.3s ease;
+    cursor: pointer; /* Opcional: muestra un puntero */
+    background-color: #f9f9f9; /* Opcional: color de fondo más claro */
+}
+
+.table-container .por-vencer{
+    background: #ff5722; width: 8px; height: 8px; border-radius: 50%;
+}
+
+
+
+.table-container .activo{
+    background: #007F00; width: 8px; height: 8px; border-radius: 50%;
+}
+
+.table-container .cancelado{
+    background: #D30000; width: 8px; height: 8px; border-radius: 50%;
+}
+
+.table-container .renovado{
+    background: #4A4AFF; width: 8px; height: 8px; border-radius: 50%;
+}
+
+.table-container .suspendido{
+    background: #6E6893; width: 8px; height: 8px; border-radius: 50%;
+}

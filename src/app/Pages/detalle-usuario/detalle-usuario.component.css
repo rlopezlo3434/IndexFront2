@@ -1,0 +1,175 @@
+.container {
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header a {
+    text-decoration: none;
+    color: #000;
+    margin-right: 52px;
+}
+
+.header h2 {
+    color: #7e57c2;
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.status {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+}
+
+.status span {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    color: #fff;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.status .habilitado {
+    background-color: #a3f7bf;
+    color: #2d6a4f;
+}
+
+.status .por-vencer {
+    background-color: #fca311;
+    color: #000;
+}
+
+.section-title {
+    color: #CE8500;
+    font-size: 25px;
+    margin: 0;
+    margin-bottom: 15px;
+}
+
+.section {
+    border-top: 1px solid #C6C2DE;
+    display: flex;
+    gap: 20px;
+    padding-top: 20px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #C6C2DE;
+}
+
+
+
+.section label {
+    font-size: 15px;
+    color: #ADADAD;
+}
+
+.section>div:first-child {
+    width: 50%;
+}
+
+.section>div:nth-child(2),
+.section>div:nth-child(3) {
+    width: 30%;
+    /* 30% de ancho para el segundo y tercer div */
+}
+
+.section .value {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #4a4a4a;
+}
+
+.buttonNewCliente {
+    background-color: #DFAC2C;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: calc(100% - 85%);
+    margin: 0 15px;
+}
+
+.buttonNewCliente2 {
+    background-color: #DFAC2C;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    padding: 10px 25px;
+    /* width: calc(100% - 85%); */
+    margin: 0 15px;
+}
+
+
+/* tabla */
+table.mat-elevation-z2 {
+    border-radius: 10px;
+    overflow: hidden;
+    border-collapse: separate;
+}
+
+.table-container {
+    margin: 20px;
+    border-radius: 8px;
+}
+
+.table-container  td{
+    font-size: 12px;
+}
+
+
+.table-container th {
+    background: #F2F2F2;
+    color: #6E6893;
+    text-align: center;
+    padding: 10px;
+}
+
+.table-container td {
+    text-align: center;
+}
+
+.mat-header-cell {
+    font-weight: bold;
+}
+
+.details-container{
+    margin-top: 10px;
+    background: #F3F3F3;
+    border-radius: 10px;
+
+}
+.titular-details{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+.titular-details label,p{
+    font-size: 13px;
+
+}
+
+.titular-details label{
+    color: #ADADAD;
+
+}
+
+.titular-details mat-icon{
+    font-size: 18px; display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+}
+
+.table-container .por-vencer{
+    background: #ff5722; width: 8px; height: 8px; border-radius: 50%;
+}

@@ -1,0 +1,119 @@
+.container-child {
+    padding-top: 30px;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.label-input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+h2,
+h3 {
+    color: #6E6893;
+    text-align: start;
+}
+
+h3 {
+    font-weight: 550;
+}
+
+.label-input label {
+    font-weight: 550;
+}
+
+.label-input input {
+    padding: 8px 8px;
+    border-radius: 6px;
+    border: 1px solid #C6C2DE;
+    outline: none;
+}
+
+.flex-container {
+    display: flex;
+    align-items: center;
+    /* Alinea verticalmente los elementos */
+    gap: 10px;
+    /* Espacio entre los elementos, opcional */
+}
+
+.buttonNewCliente {
+    background-color: #DFAC2C;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: calc(100% - 30px);
+    /* Ancho total menos el espacio en los lados */
+    margin: 0 15px;
+    /* Espacio en los lados del botón */
+}
+
+.search-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 20px 12px 40px;
+    /* Espacio para el ícono a la izquierda */
+    border: 1px solid #D3D3D3;
+    border-radius: 8px;
+    background-color: #F5F5FF;
+    /* Color de fondo similar al mostrado */
+    font-size: 16px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+    top: 60%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #8A8AAB;
+}
+
+.text-inversion{
+    color: #25213B;
+    font-weight: 550;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+.select-style{
+    padding: 8px;
+    border-radius: 8px;
+}
+.uploadC{
+    justify-content: center;
+    gap: 20px;
+}
+
+ul {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    z-index: 1000;
+  }
+  
+  li {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  li:hover {
+    background-color: #f0f0f0;
+  }
+  

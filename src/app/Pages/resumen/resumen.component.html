@@ -1,0 +1,192 @@
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav mode="over" position="end" class="filter-sidenav">
+        <div class="filter-header">
+            <h3 style="padding-top: 15px;">FILTROS</h3>
+            <button mat-icon-button (click)="sidenav.close()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <div class="filter-content">
+            <div class="fill">
+                <label>Fecha de inicio</label>
+                <div style="display: flex; margin-top: 10px;">
+                    <div style="width: 50%;">
+                        <input type="date" class="form-control" #fechaInicioDesde>
+                        <p style="margin-top: 5px; font-size: 14px; color: #9E9CAC;">Desde</p>
+                    </div>
+                    <div style="width: 50%;">
+                        <input type="date" class="form-control" #fechaInicioHasta>
+                        <p style="margin-top: 5px; font-size: 14px; color: #9E9CAC;">Hasta</p>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="fill">
+                <label>Fecha de vencimiento</label>
+                <div style="display: flex; margin-top: 10px;">
+                    <div style="width: 50%;">
+                        <input type="date" class="form-control" #fechaVencimientoDesde>
+                        <p style="margin-top: 5px; font-size: 14px; color: #9E9CAC;">Desde</p>
+                    </div>
+                    <div style="width: 50%;">
+                        <input type="date" class="form-control" #fechaVencimientoHasta>
+                        <p style="margin-top: 5px; font-size: 14px; color: #9E9CAC;">Hasta</p>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="fill">
+                <label>Moneda</label>
+                <select class="form-control custom-select select-style" #moneda>
+                    <option selected>Seleccione...</option>
+                    <option value="Soles">Soles</option>
+                    <option value="Dolares">Dólares</option>
+                </select>
+            </div>
+        
+            <div class="fill">
+                <label>Empresa</label>
+                <select class="form-control custom-select select-style" #empresa>
+                    <option selected>Seleccione...</option>
+                    <option value="3420wm">3420wm</option>
+                    <option value="F. Capital">F. Capital</option>
+                </select>
+            </div>
+        
+            <button class="buttonNewCliente" (click)="aplicarFiltros(fechaInicioDesde.value, fechaInicioHasta.value, fechaVencimientoDesde.value, fechaVencimientoHasta.value, moneda.value, empresa.value)">Filtrar</button>
+        </div>
+    </mat-sidenav>
+    <div class="container-fluid" style="width: 100%; padding: 30px;">
+        <h2>MIS CLIENTES</h2>
+        <div>
+            <div
+                style="border-bottom: 2px solid; justify-content: space-between;display: flex; align-items: center; border-color: #C6C2DE;">
+                <div
+                    style="color: #25213B;  border-bottom: 1px solid;padding: 20px 0px 20px 0; font-weight: 450; font: optional;">
+                    Clientes</div>
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <div (click)="toggleSidenav()"
+                        style="display: flex; align-items: center; border-radius: 6px; border-color: #C6C2DE !important; border: 1px solid; padding: 8px 10px 4px 10px;">
+                        <i class="fa-solid fa-filter" style="color: #8B83BA;"><mat-icon>filter_alt</mat-icon></i>
+                        Filtros
+                    </div>
+                    <div class="search-container" style="width: 350px;">
+                        <i class="bi bi-search search-icon"><mat-icon>search</mat-icon></i>
+                        <input type="text" class="form-control search-input" placeholder="Buscar cliente"
+                            style="width: 100%;">
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="table-container">
+                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
+                        <!-- Nombre Column -->
+                        <ng-container matColumnDef="nombre">
+                            <th mat-header-cell *matHeaderCellDef> NOMBRE </th>
+                            <td mat-cell *matCellDef="let element"> {{element.nombre_usuario}} <br>
+                                {{element.user.email}} </td>
+                        </ng-container>
+
+                        <!-- Estado Column -->
+                        <ng-container matColumnDef="estado">
+                            <th mat-header-cell *matHeaderCellDef> ESTADO </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div style="display: flex; gap: 5px;">
+                                    <div *ngIf="isCurrentDateInRange(element.primera_fecha_inicio, element.primera_fecha_vencimiento)"
+                                        style="display: flex; align-items: center; justify-content: center; gap: 5px; background-color: #CDFFCD; text-align: center; padding: 3px; border-radius: 10px;">
+                                        <div class="activo"></div>
+                                        <div style="color: #007F00;">{{element.primer_estado}}</div>
+                                    </div>
+                                    <div *ngIf="element.primer_estado === 'Cancelado'" 
+                                        style="display: flex; align-items: center; justify-content: center; gap: 5px; background: #FFE0E0; text-align: center; padding: 3px; border-radius: 10px;">
+                                        <div class="cancelado"></div>
+                                        <div style="color: #D30000;">{{element.primer_estado}}</div>
+                                    </div>
+                                    <div *ngIf="element.primer_estado === 'Renovado'" 
+                                        style="display: flex; align-items: center; justify-content: center; gap: 5px; background: #E6E6F2; text-align: center; padding: 3px; border-radius: 10px;">
+                                        <div class="renovado"></div>
+                                        <div style="color: #4A4AFF;">{{element.primer_estado}}</div>
+                                    </div>
+                                    <div *ngIf="element.primer_estado === 'Suspendido'" 
+                                        style="display: flex; align-items: center; justify-content: center; gap: 5px; background: #F2F0F9; text-align: center; padding: 3px; border-radius: 10px;">
+                                        <div class="suspendido"></div>
+                                        <div style="color: #6E6893;">{{element.primer_estado}}</div>
+                                    </div>
+                                    <div *ngIf="isNearExpiration(element.primera_fecha_vencimiento)"
+                                        style="display: flex; align-items: center; justify-content: center; gap: 5px; background-color: #fca311; text-align: center; padding: 3px; border-radius: 10px;">
+                                        <div class="por-vencer"></div>
+                                        <div style="color: #753800;">Por vencer</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <!-- Empresa Column -->
+                        <ng-container matColumnDef="empresa">
+                            <th mat-header-cell *matHeaderCellDef> EMPRESA </th>
+                            <td mat-cell *matCellDef="let element"> {{element.empresa}} </td>
+                        </ng-container>
+
+                        <!-- Fechas Column -->
+                        <ng-container matColumnDef="fechas">
+                            <th mat-header-cell *matHeaderCellDef> FECHAS </th>
+                            <td mat-cell *matCellDef="let element">
+                                Fecha Inicio: {{element.primera_fecha_inicio | date:'dd/MM/yyyy'}} <br> Fecha Fin:
+                                {{element.primera_fecha_vencimiento | date:'dd/MM/yyyy'}}
+                            </td>
+                        </ng-container>
+
+                        <!-- Monto Column -->
+                        <ng-container matColumnDef="monto">
+                            <th mat-header-cell *matHeaderCellDef> MONTO </th>
+                            <td mat-cell *matCellDef="let element">
+                                Soles: {{element.total_monto_soles}} <br> Dólares: {{element.total_monto_dolares}}
+                            </td>
+                        </ng-container>
+
+                        <!-- Frecuencia Column -->
+                        <ng-container matColumnDef="frecuencia">
+                            <th mat-header-cell *matHeaderCellDef> FRECUENCIA </th>
+                            <td mat-cell *matCellDef="let element"> {{element.primera_frecuencia}} </td>
+                        </ng-container>
+
+                        <!-- Rentabilidad Column -->
+                        <ng-container matColumnDef="rentabilidad">
+                            <th mat-header-cell *matHeaderCellDef> RENTABILIDAD </th>
+                            <td mat-cell *matCellDef="let element"> {{element.primer_rentabilidad}}% </td>
+                        </ng-container>
+
+
+                        <!-- Header and Rows -->
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="rowefect"
+                            (click)="goToDetail(row)"></tr>
+                    </table>
+
+
+
+                    <!-- Paginador -->
+
+
+                    <div class="summary-container">
+                        <div>
+                            <div class="summary" style="font-size: 15px;">3420WM ({{ totalClientes1 }} clientes)</div>
+                            <div class="summary" style="font-size: 15px;">F. Capital ({{ totalClientes2 }} clientes)
+                            </div>
+                        </div>
+                        <div>
+                            <div class="summary-amount">Soles: S/ {{ totalsoles }}</div>
+                            <div class="summary-amount">Dólares: $ {{ totaldolares }}</div>
+                        </div>
+
+                        <!-- Paginador con la clase personalizada -->
+                        <mat-paginator class="custom-paginator" [length]="dataSource.data.length" [pageSize]="10"
+                            [pageSizeOptions]="[1, 10, 25, 100]" (page)="onPageChange($event)" aria-label="Select page">
+                        </mat-paginator>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</mat-sidenav-container>

@@ -1,0 +1,50 @@
+<!-- <div class="container">
+  <div class="header" style="background-color: black;">
+    <img src="../../../assets/Index-Peru-1.svg" alt="">
+  </div>
+  <div class="body" style="background-color: green;">
+    <div style="background-color: red; ">
+      <div class="" style="">
+        <form class="" [formGroup]="loginForm" (ngSubmit)="onSubmit()"
+          style="display: flex;gap: 20px; flex-direction: column;">
+          <div class="">
+            <input type="text" class="" placeholder="User name / Email" formControlName="email">
+          </div>
+          <div class="">
+            <input type="password" class="" placeholder="Password" formControlName="password">
+          </div>
+          <button class="button " type="submit" [disabled]="loginForm.invalid">
+            <span class="">Log In</span>
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </form>
+      </div>
+  
+    </div>
+  </div>
+</div> -->
+<div style="min-height: 100vh;">
+  <!-- Header arriba -->
+  <div class="header" style="background-color: black; text-align: center; padding: 20px;">
+    <img src="../../../assets/Index-Peru-1.svg" alt="Logo">
+  </div>
+  
+  <!-- Body debajo del header, centrando la card roja -->
+  <div class="body" style="height: calc(100vh - 200px); display: flex; justify-content: center; align-items: center; ">
+    <div style="padding: 60px 20px; border-radius: 10px; text-align: center; width: 30%; border-radius: 8px; box-shadow: 0 0 50px rgba(7, 7, 7, 0.1);">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" style="display: flex; gap: 20px; flex-direction: column; align-items: center; width: 100%;">
+        <div style="width: 100%;">
+          <input class="form-control" type="text" placeholder="User name / Email" formControlName="email" style="width: 100%; padding: 10px;">
+        </div>
+        <div style="width: 100%;">
+          <input class="form-control" type="password" placeholder="Password" formControlName="password" style="width: 100%; padding: 10px;">
+        </div>
+        <button type="submit" [disabled]="loginForm.invalid" style="padding: 10px 20px;" class="buttonNewCliente">
+          <span>Log In</span>
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+

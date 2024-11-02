@@ -1,0 +1,75 @@
+.example-container {
+    height: 100vh;
+    overflow: hidden; /* Oculta el scroll horizontal */
+}
+mat-drawer {
+    display: grid;
+    min-height: 100dvh;
+    grid-template-rows: auto auto 1fr auto;
+    width: 15%;
+    overflow: hidden; /* Oculta cualquier desbordamiento horizontal del contenido */
+}
+mat-drawer-container{
+    overflow-x: hidden;
+}
+.menu-list a {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 12px 16px;
+    color: white;
+    text-decoration: none;
+}
+
+.menu-list mat-icon {
+    margin-right: 8px;
+    /* Espacio entre el icono y el texto */
+}
+
+.menu-list a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    /* Fondo ligeramente visible al pasar el ratón */
+    color: #DFAC2C;
+    /* Color del texto al pasar el ratón */
+    transition: background-color 0.3s, color 0.3s;
+    /* Transiciones suaves */
+}
+
+.drawer-header-image {
+    padding-top: 5%;
+    width: auto;
+    margin: 20px;
+    object-fit: cover;
+}
+
+.drawer-menu {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.new-client-button {
+    margin: 16px;
+    /* Espaciado alrededor del botón */
+    align-self: center;
+    /* Centrar el botón */
+    background-color: #DFAC2C;
+    /* Color de fondo */
+    padding: 12px 40px;
+    border-radius: 6px;
+    border: none;
+    /* Quitar el borde del botón */
+    color: white;
+}
+
+.drawer-content {
+    padding: 16px;
+    display: grid;
+    min-height: 100dvh;
+    grid-template-rows: auto auto 1fr auto;
+}
+
+.drawer-footer {
+    padding: 16px;
+    background-color: #000; /* Ajusta el color de fondo */
+    color: white;
+}

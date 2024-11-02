@@ -1,0 +1,238 @@
+<div class="container-fluid">
+    <form [formGroup]="clienteForm" (ngSubmit)="obtenerValores()">
+        <div class="row">
+            <div class="col-6 container-child">
+                <div style="margin-bottom: 10px;">
+                    <h2>NUEVO CLIENTE</h2>
+                    <div class="row">
+                        <div class="col-md-4 label-input">
+                            <label for="nombre">Nombre</label>
+                            <input formControlName="nombre" type="text" class="form-control" id="nombre"
+                                placeholder="Nombre Cliente">
+                        </div>
+                        <div class="col-md-4 label-input">
+                            <label for="apellido">Apellido</label>
+                            <input formControlName="apellido" type="text" class="form-control" id="apellido"
+                                placeholder="Apellido Cliente">
+                        </div>
+                        <div class="col-md-4 label-input">
+                            <label for="dni">Dni</label>
+                            <input formControlName="dni" type="text" class="form-control" id="dni"
+                                placeholder="DNI / CE Cliente">
+                        </div>
+                        <div class="col-md-4 label-input">
+                            <label for="correo">Correo</label>
+                            <input formControlName="email" type="email" class="form-control" id="correo"
+                                placeholder="Correo Cliente">
+                        </div>
+                        <div class="col-md-4 label-input">
+                            <label for="celular">Celular</label>
+                            <input formControlName="phone" type="text" class="form-control" id="celular"
+                                placeholder="Celular Cliente">
+                        </div>
+                        <div class="col-md-4 label-input">
+                            <label for="fecha">Fecha de nacimiento</label>
+                            <input formControlName="fecha_nacimiento" type="date" class="form-control" id="fecha"
+                                placeholder="Fecha nacimiento">
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <h2 style=" padding-top: 15px; line-height: 1;">MANCOMUNADA</h2>
+                    <input type="checkbox" (change)="toggleDisabled($event)">
+                </div>
+
+                <div style="padding-bottom: 30px;">
+
+                    <div class="row" style="margin-bottom: 25px;">
+                        <h3>SEGUNDO TITULAR </h3>
+                        <div class="col-md-4 label-input">
+                            <label for="nombre">Nombre</label>
+                            <input formControlName="nombre2" type="text" class="form-control" id="nombre"
+                                placeholder="Nombre" [disabled]="isDisabled">
+                        </div>
+                        <div class="col-md-4 label-input">
+                            <label for="apellido">Apellido</label>
+                            <input formControlName="apellido2" type="text" class="form-control" id="apellido"
+                                placeholder="Apellido" [disabled]="isDisabled">
+                        </div>
+                        <div class="col-md-4 label-input">
+                            <label for="dni">Dni</label>
+                            <input formControlName="dni2" type="text" class="form-control" id="dni" placeholder="DNI"
+                                [disabled]="isDisabled">
+                        </div>
+                        <div class="col-md-4 label-input">
+                            <label for="correo">Correo</label>
+                            <input formControlName="email2" type="email" class="form-control" id="correo"
+                                placeholder="Correo" [disabled]="isDisabled">
+                        </div>
+                        <div class="col-md-4 label-input">
+                            <label for="celular">Celular</label>
+                            <input formControlName="phone2" type="text" class="form-control" id="celular"
+                                placeholder="Celular" [disabled]="isDisabled">
+                        </div>
+                        <div class="col-md-4 label-input">
+                            <label for="fecha">Fecha de nacimiento</label>
+                            <input formControlName="fecha_nacimiento2" type="date" class="form-control" id="fecha"
+                                placeholder="Fecha nacimiento" [disabled]="isDisabled">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="row">
+                            <h3>TERCER TITULAR </h3>
+                            <div class="col-md-4 label-input">
+                                <label for="nombre">Nombre</label>
+                                <input formControlName="nombre3" type="text" class="form-control" id="nombre"
+                                    placeholder="Nombre" [disabled]="isDisabled">
+                            </div>
+                            <div class="col-md-4 label-input">
+                                <label for="apellido">Apellido</label>
+                                <input formControlName="apellido3" type="text" class="form-control" id="apellido"
+                                    placeholder="Apellido" [disabled]="isDisabled">
+                            </div>
+                            <div class="col-md-4 label-input">
+                                <label for="dni">Dni</label>
+                                <input formControlName="dni3" type="text" class="form-control" id="dni"
+                                    placeholder="DNI" [disabled]="isDisabled">
+                            </div>
+                            <div class="col-md-4 label-input">
+                                <label for="correo">Correo</label>
+                                <input formControlName="email3" type="email" class="form-control" id="correo"
+                                    placeholder="Correo" [disabled]="isDisabled">
+                            </div>
+                            <div class="col-md-4 label-input">
+                                <label for="celular">Celular</label>
+                                <input formControlName="phone3" type="text" class="form-control" id="celular"
+                                    placeholder="Celular" [disabled]="isDisabled">
+                            </div>
+                            <div class="col-md-4 label-input">
+                                <label for="fecha">Fecha de nacimiento</label>
+                                <input formControlName="fecha_nacimiento3" type="date" class="form-control" id="fecha"
+                                    placeholder="Fecha nacimiento" [disabled]="isDisabled">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button *ngIf="!mostrarBoton" type="submit" class="buttonNewCliente">Nuevo Cliente</button>
+            </div>
+
+            <div class="col-6 container-child">
+                <div class="mb-3">
+                    <h2>NUEVA INVERSIÓN</h2>
+                    <div class="search-container">
+                        <i class="bi bi-search search-icon"><mat-icon>search</mat-icon></i>
+                        <input type="text" class="form-control search-input" placeholder="Buscar cliente"
+                                (input)="filtrarClientes($event)" />
+                        <ul *ngIf="clientesFiltrados.length > 0 && !clienteSeleccionado && searchText.trim() !== '' ">
+                            <li *ngFor="let cliente of clientesFiltrados" (click)="seleccionarCliente(cliente)">
+                                {{ cliente.nombre + ' ' +  cliente.apellido }} <!-- Ajusta según el nombre del cliente -->
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="text-inversion">
+                    Para agregar una nueva inversión primero busque a un cliente. <br> En caso sea su primera inversión,
+                    llenar está información. <br> Recuerde que puede añadir la inversión al cliente en cualquier momento
+                </div>
+                <div>
+                    <div class="row">
+                        <div class="col-md-6 label-input">
+                            <label for="nombre">Estado</label>
+                            <select formControlName="estado" class="form-control custom-select select-style" name=""
+                                id="">
+                                <option selected>Seleccione...</option>
+                                <option value="Renovado">Renovado</option>
+                                <option value="Cancelado">Cancelado</option>
+                                <option value="Suspendido">Suspendido</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 label-input">
+                            <label for="apellido">Tipo de inversión</label>
+                            <select formControlName="tipoInversion" class="form-control custom-select select-style"
+                                name="" id="">
+                                <option selected>Seleccione...</option>
+                                <option value="Simple">Simple</option>
+                                <option value="Mancomunada">Mancomunada</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 label-input">
+                            <label for="nombre">Fecha de inicio</label>
+                            <input formControlName="fecha_inicio" type="date" class="form-control" id="nombre"
+                                value="Aitor">
+                        </div>
+                        <div class="col-md-6 label-input">
+                            <label for="apellido">Vencimiento</label>
+                            <input formControlName="fecha_vencimiento" type="date" class="form-control" id="apellido"
+                                value="Tilla">
+                        </div>
+                        <div class="col-md-6 label-input">
+                            <label for="nombre">Perfil de la inversión</label>
+                            <select formControlName="perfilInversion" class="form-control custom-select select-style"
+                                name="" id="">
+                                <option selected>Seleccione...</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 label-input">
+                            <label for="apellido">Empresa</label>
+                            <select formControlName="empresa" class="form-control custom-select select-style" name=""
+                                id="">
+                                <option selected>Seleccione...</option>
+                                <option value="3420wm">3420wm</option>
+                                <option value="F. Capital">F. Capital</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 label-input">
+                            <label for="apellido">Monto en soles</label>
+                            <input formControlName="monto_soles" type="number" class="form-control" id="montoSoles"
+                                (input)="onInputChange($event)" [disabled]="isDisabledSoles">
+                        </div>
+                        <div class="col-md-6 label-input">
+                            <label for="apellido">Monto en dolares</label>
+                            <input formControlName="monto_dolares" type="number" class="form-control" id="montoDolares"
+                                (input)="onInputChange2($event)" [disabled]="isDisabledDolares">
+                        </div>
+                        <div class="col-md-6 label-input">
+                            <label for="apellido">Fondo</label>
+                            <input formControlName="fondo" type="text" class="form-control" id="fondo">
+                        </div>
+                        <div class="col-md-6 label-input">
+                            <label for="apellido">Rentabilidad</label>
+                            <input formControlName="rentabilidad" type="text" class="form-control" id="rentabilidad">
+                        </div>
+                        <div class="col-md-6 label-input">
+                            <label for="apellido">Objetivo</label>
+                            <input formControlName="objetivo" type="text" class="form-control" id="objetivo">
+                        </div>
+                        <div class="col-md-6 label-input">
+                            <label for="apellido">Frecuencia</label>
+                            <select formControlName="frecuencia" class="form-control custom-select select-style" name=""
+                                id="">
+                                <option selected>Seleccione...</option>
+                                <option value="MENSUAL">Mensual</option>
+                                <option value="BIMENSUAL">Bimensual</option>
+                                <option value="TRIMESTRAL">Trimestral</option>
+                                <option value="SEMESTRAL">Semestral</option>
+                                <option value="ANUAL">Anual</option>
+                                <option value="VENCIMIENTO">Al vencimiento</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12 label-input uploadC">
+                            <div class="d-flex uploadC">
+                                <i class="d-flex align-items-center"><mat-icon>cloud_upload</mat-icon></i>
+                                <input type="file" formControlName="documento" (change)="onFileSelected($event)" class="form-control" />
+                                <!-- <input type="file" class="form-control" > -->
+                            </div>
+                        </div>
+                        <div *ngIf="mostrarBoton"  style="text-align: center;" type="submit" (click)="nuevaInversion()"  class="buttonNewCliente">Nueva inversión</div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>

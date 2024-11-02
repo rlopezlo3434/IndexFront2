@@ -1,0 +1,134 @@
+canvas {
+  max-width: 600px;
+  max-height: 400px;
+}
+
+.container {
+  margin: 0px;
+}
+
+h2,
+h3 {
+  color: #6E6893;
+  text-align: start;
+}
+
+
+.search-container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #D3D3D3;
+  border-radius: 8px;
+  background-color: #F5F5FF;
+  font-size: 16px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  top: 60%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: #8A8AAB;
+}
+
+.filter-icon {
+  font-size: 20px;
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+.alertas-container {
+  margin-top: 10px;
+  width: 100%;
+  margin: auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.alertas-container h3 {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #1a1a1a;
+  margin-bottom: 15px;
+}
+
+.alerta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.alerta-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.alerta-info p {
+  font-weight: 500;
+  margin: 0;
+}
+
+.fecha {
+  color: #9e9e9e;
+  font-size: 0.9em;
+}
+
+.badge {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.8em;
+  color: white;
+  display: inline-block;
+}
+
+.activo {
+  background-color: #007bff;
+}
+
+.nuevo {
+  background-color: #28a745;
+}
+
+.modificado {
+  background-color: #6f42c1;
+}
+
+.vencido {
+  background-color: #dc3545;
+}
+
+.por-vencer {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.ver-todos {
+  display: block;
+  text-align: center;
+  color: #ff9900;
+  font-weight: 500;
+  text-decoration: none;
+  margin-top: 10px;
+}
+
+.ver-todos:hover {
+  text-decoration: underline;
+}

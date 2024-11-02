@@ -1,0 +1,157 @@
+<div class="container-fluid" style="width: 100%; padding: 30px;">
+    <h2>DASHBOARD</h2>
+    <div>
+        <div
+            style="border-bottom: 2px solid; justify-content: space-between;display: flex; align-items: center; border-color: #C6C2DE;">
+            <div style="display: flex; gap: 40px;">
+                <div
+                    style="color: #25213B;  border-bottom: 1px solid;padding: 20px 0px 20px 0; font-weight: 450; font: optional;">
+                    Empresa</div>
+                <!-- <div
+                    style="color: #25213B;  border-bottom: 1px solid;padding: 20px 0px 20px 0; font-weight: 450; font: optional;">
+                    Asesor</div> -->
+            </div>
+
+            <!-- <div style="display: flex; align-items: center; gap: 20px;">
+                <div class="search-container" style="width: 350px;">
+                    <i class="bi bi-search search-icon"><mat-icon>search</mat-icon></i>
+                    <input type="text" class="form-control search-input" placeholder="Buscar cliente"
+                        style="width: 100%;">
+                </div>
+            </div> -->
+        </div>
+
+    </div>
+    <div class="icon-container" style="display: flex; justify-content: space-between;margin-top: 20px;">
+        <div style="display: flex; gap: 10px;">
+            <i class="fa-solid fa-filter"><mat-icon
+                    style="width: 40px; height: 40px; font-size: 40px;">filter_alt</mat-icon></i>
+
+            <div style="width: 13%;">
+                <label>Año</label>
+                <select class="form-control" (change)="onYearChange($event)" disabled>
+                    <option value="" disabled selected>{{currentYear}}</option>
+                    <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+                </select>
+            </div>
+            <div style="width: 15%;">
+                <label>Fecha Inicio</label>
+                <input #fechaInicioInput class="form-control" type="date" (change)="onFechaChange(fechaInicioInput.value, fechaFinInput.value)">
+            </div>
+            <div style="width: 15%;">
+                <label>Fecha Fin</label>
+                <input #fechaFinInput class="form-control" type="date" (change)="onFechaChange(fechaInicioInput.value, fechaFinInput.value)">
+            </div>
+            <div style="width: 15%;">
+                <label>Mostrar Por</label>
+                <select class="form-control" (change)="onYearChange($event)" >
+                    <option selected>Seleccione...</option>
+                    <option value="Incremento">Incremento</option>
+                    <option value="Decremento">Decremento</option>
+
+                </select>
+            </div>
+            <div style="width: 16%;">
+                <label>Cuenta</label>
+                <select class="form-control" (change)="onYearChange($event)" >
+                    <option selected>Seleccione...</option>
+                    <option value="Simple">Simple</option>
+                    <option value="Macomunada">Macomunada</option>
+
+                </select>
+            </div>
+        </div>
+        <div style="margin-top: 40px; display: flex; justify-content: flex-end; color: #5C5390;">
+            <span style="text-align: right;">Se muestran los diagramas en soles y dólares por empresa</span>
+        </div>
+
+    </div>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 30px; margin-top: 20px;">
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div
+                style="background: #FFEFE7; padding: 10px 30px; border-radius: 10px; display: flex; flex-direction: column;">
+                <label><strong>Nuevos Clientes</strong></label>
+                <label style="font-size: 30px;">{{nuevoCliente ? nuevoCliente : 0}}</label>
+                <label>{{ rangoMeses }}</label>
+            </div>
+            <div
+                style="background: #E8F0FB; padding: 10px 30px; border-radius: 10px; display: flex; flex-direction: column;">
+                <label><strong>Por vencer</strong></label>
+                <label style="font-size: 30px;">{{porVencer ? porVencer : 0}}</label>
+                <label>{{ siguienteMes }}</label>
+            </div>
+            <div
+                style="background: #FDEBF9; padding: 10px 30px; border-radius: 10px; display: flex; flex-direction: column;">
+                <label><strong>Vencidos</strong></label>
+                <label style="font-size: 30px;">{{ vencidos ? vencidos : 0}}</label>
+                <label>{{ rangoMeses }}</label>
+            </div>
+        </div>
+        <div style="display: flex; gap: 20px;">
+            <div
+                style="display: block; margin-bottom: 20px; border: 1px solid #E0E0E0; padding: 20px 40px; border-radius: 10px;">
+                <canvas baseChart [type]="'pie'" [datasets]="pieChartDatasetsEmpresa1" [labels]="pieChartLabels"
+                    [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+                </canvas>
+                <div
+                    style="margin-top: 20px; display: flex; justify-content: flex-start; color: #5C5390; font-size: 20px;">
+                    <span style="text-align: right;">3420wm</span>
+                </div>
+            </div>
+
+            <div
+                style="display: block; margin-bottom: 20px; border: 1px solid #E0E0E0; padding: 20px 40px; border-radius: 10px;">
+                <canvas baseChart [type]="'pie'" [datasets]="pieChartDatasetsEmpresa2" [labels]="pieChartLabels"
+                    [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+                </canvas>
+                <div
+                    style="margin-top: 20px; display: flex; justify-content: flex-start; color: #5C5390; font-size: 20px;">
+                    <span style="text-align: right;">F. Capital</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div>Alertas</div>
+        <div class="alertas-container" style="margin-top: 20px;">
+            <div class="alerta">
+                <div class="alerta-info">
+                  <p>Aitor Tilla</p>
+                  <span class="badge activo">Activo</span>
+                  <span class="badge nuevo">Nuevo</span>
+                </div>
+                <span class="fecha">24 Julio 2024</span>
+              </div>
+            
+              <div class="alerta">
+                <div class="alerta-info">
+                  <p>Juian Perez Derts</p>
+                  <span class="badge modificado">Modificado</span>
+                </div>
+                <span class="fecha">22 Julio 2024</span>
+              </div>
+            
+              <div class="alerta">
+                <div class="alerta-info">
+                  <p>Susy Liandres Perw</p>
+                  <span class="badge vencido">Vencido</span>
+                </div>
+                <span class="fecha">20 Julio 2024</span>
+              </div>
+            
+              <div class="alerta">
+                <div class="alerta-info">
+                  <p>Diaz Veloz Tiuesta</p>
+                  <span class="badge por-vencer">Por vencer</span>
+                </div>
+                <span class="fecha">30 Julio 2024</span>
+              </div>
+            
+              <a href="dashboard/resumen" class="ver-todos">Ver todos los clientes</a>
+        </div>
+
+    </div>
+
+
+
+</div>

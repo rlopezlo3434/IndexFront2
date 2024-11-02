@@ -1,0 +1,101 @@
+<div class="container-fluid">
+    <form [formGroup]="clienteForm" (ngSubmit)="obtenerValores()">
+        <div class="row">
+            <div class="col-6 container-child">
+                <div style="margin-bottom: 10px;">
+                    <h2>NUEVO ASESOR</h2>
+                    <div class="row">
+                        <div class="col-md-4 label-input">
+                            <label for="nombre">Nombre</label>
+                            <input formControlName="nombre" type="text" class="form-control" id="nombre"
+                                placeholder="Nombre Cliente">
+                        </div>
+                        <div class="col-md-4 label-input">
+                            <label for="apellido">Apellido</label>
+                            <input formControlName="apellido" type="text" class="form-control" id="apellido"
+                                placeholder="Apellido Cliente">
+                        </div>
+                        <div class="col-md-4 label-input">
+                            <label for="dni">Dni</label>
+                            <input formControlName="dni" type="text" class="form-control" id="dni"
+                                placeholder="DNI / CE Cliente">
+                        </div>
+                        <div class="col-md-4 label-input">
+                            <label for="correo">Correo</label>
+                            <input formControlName="email" type="email" class="form-control" id="correo"
+                                placeholder="Correo Cliente">
+                        </div>
+                        <div class="col-md-4 label-input">
+                            <label for="celular">Celular</label>
+                            <input formControlName="phone" type="text" class="form-control" id="celular"
+                                placeholder="Celular Cliente">
+                        </div>
+                        <div class="col-md-4 label-input">
+                            <label for="fecha">Fecha de nacimiento</label>
+                            <input formControlName="fecha_nacimiento" type="date" class="form-control" id="fecha"
+                                placeholder="Fecha nacimiento">
+                        </div>
+                        <div class="col-md-5 label-input">
+                            <label for="fecha">Dirección</label>
+                            <input formControlName="direccion" type="text" class="form-control" id="direccion"
+                                placeholder="Dirección (calle y distrito)">
+                        </div>
+                        <div class="col-md-5 label-input">
+                            <label for="fecha">Lugar de Residencia</label>
+                            <input formControlName="lugar_residencia" type="text" class="form-control"
+                                id="lugar_residencia" placeholder="Provincia y País">
+                        </div>
+                        <div class="col-md-12 label-input uploadC">
+                            <div class="d-flex uploadC">
+                                <i class="d-flex align-items-center"><mat-icon>cloud_upload</mat-icon></i>
+                                <input type="file" formControlName="documento" (change)="onFileSelected($event)"
+                                    class="form-control" />
+                                <!-- <input type="file" class="form-control" > -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="buttonNewCliente">Nuevo Asesor</button>
+            </div>
+
+            <div class="col-6 container-child">
+                <div class="mb-3">
+                    <h2>LISTA ASESORES</h2>
+                    <!-- <div class="search-container">
+                        <i class="bi bi-search search-icon"><mat-icon>search</mat-icon></i>
+                        <input type="text" class="form-control search-input" placeholder="Buscar cliente"
+                                (input)="filtrarClientes($event)" />
+                        <ul *ngIf="clientesFiltrados.length > 0 && !clienteSeleccionado && searchText.trim() !== '' ">
+                            <li *ngFor="let cliente of clientesFiltrados" (click)="seleccionarCliente(cliente)">
+                                {{ cliente.nombre + ' ' +  cliente.apellido }} 
+                            </li>
+                        </ul>
+                    </div> -->
+
+                </div>
+                <div class="text-inversion">
+                    Un Asesor solo puede ser registrado por un administrador.
+                </div>
+                <div class="alertas-container" style="margin-top: 20px;">
+
+                    <div *ngFor="let asesores of asesoreslist">
+                        <div class="alerta">
+                            <div class="alerta-info">
+                                <p>{{asesores.nombre}} {{asesores.apellido}}</p>
+                                <span class="badge">{{asesores.email}}</span>
+                            </div>
+                            <span class="fecha">{{ asesores.created_at | date:'dd/MM/yyyy'}}</span>
+                            <div (click)="downloadDni(asesores.documento)">
+                                <mat-icon>download</mat-icon>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </form>
+</div>
