@@ -26,6 +26,7 @@ export class LoginComponent {
       this.authService.login(email, password).subscribe({
         next: (response: any) => {
           console.log('Login successful', response);
+          localStorage.setItem('token', response.token);
           localStorage.setItem('userData', JSON.stringify(response.user));
           this.router.navigate(['/dashboard']);
         },
