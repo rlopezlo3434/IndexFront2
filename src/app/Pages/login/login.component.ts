@@ -14,16 +14,26 @@ export class LoginComponent {
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required]],
       password: ['', [Validators.required]]
     });
   }
 
+  // Función para verificar si el valor es un correo electrónico
+  private isEmail(email: string): boolean {
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailPattern.test(email);
+  }
+
   onSubmit() {
     console.log('Form submitted', this.loginForm.value);
+
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-      this.authService.login(email, password).subscribe({
+
+      const role = this.isEmail(email) ? 'asesor' : 'cliente';
+
+      this.authService.login(email, password, role).subscribe({
         next: (response: any) => {
           console.log('Login successful', response);
           localStorage.setItem('token', response.token);

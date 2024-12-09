@@ -21,4 +21,12 @@ export class ResumenService {
       { withCredentials: true } // Incluye las credenciales en la solicitud
     );
   }
+
+  exportarExcel(): Observable<any> {
+    return this.http.post(
+      this.apiUrl + '/clientes', 
+      {  },
+      { withCredentials: true } // Incluye las credenciales en la solicitud
+    );
+  }
 }

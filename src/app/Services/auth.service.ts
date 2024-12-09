@@ -13,10 +13,10 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   // Método para iniciar sesión
-  login(email: string, password: string) {
+  login(email: string, password: string, role: string){
     return this.http.post(
       this.apiUrl + '/auth/login', 
-      { email, password },
+      { email, password, role },
       { withCredentials: true } // Incluye las credenciales en la solicitud
     );
   }

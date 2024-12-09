@@ -20,7 +20,7 @@
                     </div>
                 </div>
             </div>
-        
+
             <div class="fill">
                 <label>Fecha de vencimiento</label>
                 <div style="display: flex; margin-top: 10px;">
@@ -34,7 +34,7 @@
                     </div>
                 </div>
             </div>
-        
+
             <div class="fill">
                 <label>Moneda</label>
                 <select class="form-control custom-select select-style" #moneda>
@@ -43,7 +43,7 @@
                     <option value="Dolares">Dólares</option>
                 </select>
             </div>
-        
+
             <div class="fill">
                 <label>Empresa</label>
                 <select class="form-control custom-select select-style" #empresa>
@@ -52,8 +52,22 @@
                     <option value="F. Capital">F. Capital</option>
                 </select>
             </div>
-        
-            <button class="buttonNewCliente" (click)="aplicarFiltros(fechaInicioDesde.value, fechaInicioHasta.value, fechaVencimientoDesde.value, fechaVencimientoHasta.value, moneda.value, empresa.value)">Filtrar</button>
+
+            <div class="fill">
+                <label>Estado</label>
+                <select class="form-control custom-select select-style" #estado>
+                    <option selected>Seleccione...</option>
+                    <option value="Renovacion_Anticipada">Renovación anticipada</option>
+                    <option value="Vencido">Vencido</option>
+                    <option value="No_Renovado">No Renovado</option>
+                    <option value="Cancelado">Cancelado</option>
+                    <option value="Garantia">Garantia</option>
+                    <option value="Vigente">Vigente</option>
+                </select>
+            </div>
+
+            <button class="buttonNewCliente"
+                (click)="aplicarFiltros(fechaInicioDesde.value, fechaInicioHasta.value, fechaVencimientoDesde.value, fechaVencimientoHasta.value, moneda.value, empresa.value, estado.value)">Filtrar</button>
         </div>
     </mat-sidenav>
     <div class="container-fluid" style="width: 100%; padding: 30px;">
@@ -65,9 +79,18 @@
                     style="color: #25213B;  border-bottom: 1px solid;padding: 20px 0px 20px 0; font-weight: 450; font: optional;">
                     Clientes</div>
                 <div style="display: flex; align-items: center; gap: 20px;">
+                    <div style="display: flex; align-items: center; font-size: 20px; justify-content: center; cursor: pointer;"
+                        (click)="exportExcel()">
+                        <i style="color: green;"><mat-icon>
+                                description
+                            </mat-icon></i>
+                        <div>
+                            Excel
+                        </div>
+                    </div>
                     <div (click)="toggleSidenav()"
-                        style="display: flex; align-items: center; border-radius: 6px; border-color: #C6C2DE !important; border: 1px solid; padding: 8px 10px 4px 10px;">
-                        <i class="fa-solid fa-filter" style="color: #8B83BA;"><mat-icon>filter_alt</mat-icon></i>
+                        style="display: flex; align-items: center; border-radius: 6px; border-color: #C6C2DE !important; border: 1px solid; padding: 8px 10px 4px 10px; cursor: pointer;">
+                        <i style="color: #8B83BA;"><mat-icon>filter_alt</mat-icon></i>
                         Filtros
                     </div>
                     <div class="search-container" style="width: 350px;">
@@ -97,17 +120,17 @@
                                         <div class="activo"></div>
                                         <div style="color: #007F00;">{{element.primer_estado}}</div>
                                     </div>
-                                    <div *ngIf="element.primer_estado === 'Cancelado'" 
+                                    <div *ngIf="element.primer_estado === 'Cancelado'"
                                         style="display: flex; align-items: center; justify-content: center; gap: 5px; background: #FFE0E0; text-align: center; padding: 3px; border-radius: 10px;">
                                         <div class="cancelado"></div>
                                         <div style="color: #D30000;">{{element.primer_estado}}</div>
                                     </div>
-                                    <div *ngIf="element.primer_estado === 'Renovado'" 
+                                    <div *ngIf="element.primer_estado === 'Renovado'"
                                         style="display: flex; align-items: center; justify-content: center; gap: 5px; background: #E6E6F2; text-align: center; padding: 3px; border-radius: 10px;">
                                         <div class="renovado"></div>
                                         <div style="color: #4A4AFF;">{{element.primer_estado}}</div>
                                     </div>
-                                    <div *ngIf="element.primer_estado === 'Suspendido'" 
+                                    <div *ngIf="element.primer_estado === 'Suspendido'"
                                         style="display: flex; align-items: center; justify-content: center; gap: 5px; background: #F2F0F9; text-align: center; padding: 3px; border-radius: 10px;">
                                         <div class="suspendido"></div>
                                         <div style="color: #6E6893;">{{element.primer_estado}}</div>
@@ -128,14 +151,19 @@
                         </ng-container>
 
                         <!-- Fechas Column -->
-                        <ng-container matColumnDef="fechas">
-                            <th mat-header-cell *matHeaderCellDef> FECHAS </th>
+                        <ng-container matColumnDef="fechasI">
+                            <th mat-header-cell *matHeaderCellDef> FECHA INICIO </th>
                             <td mat-cell *matCellDef="let element">
-                                Fecha Inicio: {{element.primera_fecha_inicio | date:'dd/MM/yyyy'}} <br> Fecha Fin:
+                                {{element.primera_fecha_inicio | date:'dd/MM/yyyy'}}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="fechasF">
+                            <th mat-header-cell *matHeaderCellDef> FECHA FIN </th>
+                            <td mat-cell *matCellDef="let element">
+
                                 {{element.primera_fecha_vencimiento | date:'dd/MM/yyyy'}}
                             </td>
                         </ng-container>
-
                         <!-- Monto Column -->
                         <ng-container matColumnDef="monto">
                             <th mat-header-cell *matHeaderCellDef> MONTO </th>

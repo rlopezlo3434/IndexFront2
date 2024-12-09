@@ -28,6 +28,8 @@ import { BaseChartDirective } from 'ng2-charts';
 import { AsesoresComponent } from './Pages/asesores/asesores.component';
 import { provideToastr } from 'ngx-toastr';
 import { ToastrModule } from 'ngx-toastr';
+import { EmpresaComponent } from './Pages/empresa/empresa.component';
+import { ClienteComponent } from './Pages/cliente/cliente.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { ToastrModule } from 'ngx-toastr';
     ResumenComponent,
     DetalleUsuarioComponent,
     AnalisisComponent,
-    AsesoresComponent
+    AsesoresComponent,
+    EmpresaComponent,
+    ClienteComponent
   ],
   imports: [
     // FormsModule,

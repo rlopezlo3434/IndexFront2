@@ -10,11 +10,13 @@ import { ToastrService } from 'ngx-toastr';
 export class DashboardComponent implements OnInit {
 
   cliente: any = {};
+  role: string = '';
   constructor(private router: Router, private toastr: ToastrService) {
     
   }
 
   ngOnInit(): void {
+
     this.obtenerDetalleUsuario();
     this.showSuccess();
   }
@@ -29,6 +31,7 @@ export class DashboardComponent implements OnInit {
   obtenerDetalleUsuario() {
     const clienteData = localStorage.getItem('userData');
     this.cliente = clienteData ? JSON.parse(clienteData) : null;
+    this.role = this.cliente.rol_id;
     console.log(this.cliente);  
     console.log(this.cliente.user_id);
   }

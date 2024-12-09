@@ -1,40 +1,44 @@
 <mat-drawer-container class="example-container">
     <mat-drawer #drawer mode="side" style="background-color: black;" opened>
         <!-- Contenedor del Drawer -->
-        <div class="drawer-content">
+        <div class="drawer-content" [ngClass]="{'role-12-class': role == '1' || role == '2'}">
             <div class="drawer-header">
                 <img src="../../../assets/Index-Peru-1.svg" alt="Header Image" class="drawer-header-image" />
             </div>
 
             <!-- Botón de nuevo cliente -->
-            <button class="new-client-button" (click)="click()">
+            <button *ngIf="role == '2' || role == '1'" class="new-client-button"     (click)="click()">
                 Nuevo Cliente
             </button>
 
             <!-- Lista de Menú -->
             <div class="menu-list">
-                <a mat-list-item routerLink="analisis" routerLinkActive="active">
+                <a *ngIf="role == '2' || role == '1' " mat-list-item routerLink="analisis" routerLinkActive="active">
                     <mat-icon>dashboard</mat-icon>Reporte
                 </a>
-                <!-- <a mat-list-item routerLink="resumen" routerLinkActive="active">
-                    <mat-icon>person_add</mat-icon>Resumen
-                </a> -->
-                <a mat-list-item routerLink="asesores" routerLinkActive="active">
+                <a *ngIf="role == '1' " mat-list-item routerLink="asesores" routerLinkActive="active">
                     <mat-icon>diversity_3</mat-icon>Mis Asesores
                 </a>
-                <a mat-list-item routerLink="resumen" routerLinkActive="active">
+                <a *ngIf="role == '2' || role == '1'" mat-list-item routerLink="resumen"
+                    routerLinkActive="active">
                     <mat-icon>support_agent</mat-icon>Mis Clientes
                 </a>
-                <a mat-list-item routerLink="/dashboard" routerLinkActive="active">
-                    <mat-icon>settings</mat-icon>Mi Perfil
+                <a *ngIf="role == '3' " mat-list-item routerLink="cliente"
+                    routerLinkActive="active">
+                    <mat-icon>support_agent</mat-icon>Cliente
+                </a>
+                <a *ngIf=" role == '1' " mat-list-item routerLink="empresa" routerLinkActive="active">
+                    <mat-icon>apartment</mat-icon>Empresas
                 </a>
             </div>
             <div class="drawer-footer">
-                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid white; padding-bottom: 15px;">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid white; padding-bottom: 15px;">
                     <div>
                         {{ cliente.rol_id === 3 ? 'Cliente' : cliente.rol_id === 2 ? 'Asesor' : 'Administrador' }}
                     </div>
-                    <div style="background-color: red; padding: 3px; border-radius: 4px; display: flex; align-items: center;" (click)="gotoLogin()">
+                    <div style="background-color: red; padding: 3px; border-radius: 4px; display: flex; align-items: center;"
+                        (click)="gotoLogin()">
                         <mat-icon style="color: white;">logout</mat-icon>
                     </div>
                 </div>
@@ -46,12 +50,12 @@
                         {{ cliente.email }}
                     </div>
                 </div>
-                
+
             </div>
         </div>
 
         <!-- Footer -->
-        
+
     </mat-drawer>
 
     <mat-drawer-content>

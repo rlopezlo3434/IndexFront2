@@ -1,16 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { DetalleUsuarioService } from './detalle-usuario.service';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { DetalleUsuarioService } from '../detalle-usuario/detalle-usuario.service';
 import { ToastrService } from 'ngx-toastr';
-
 @Component({
-  selector: 'app-detalle-usuario',
-  templateUrl: './detalle-usuario.component.html',
-  styleUrls: ['./detalle-usuario.component.css']
+  selector: 'app-cliente',
+  templateUrl: './cliente.component.html',
+  styleUrls: ['./cliente.component.css']
 })
-export class DetalleUsuarioComponent implements OnInit {
-  updateDocument: boolean = false;
-  displayedColumns: string[] = ['Editar', 'Estado', 'Tipo', 'Fechas', 'Empresa', 'Monto', 'Rentabilidad', 'Frecuencia', 'Documentos'];
+export class ClienteComponent {
+  displayedColumns: string[] = ['Estado', 'Tipo', 'Fechas', 'Empresa', 'Monto', 'Rentabilidad', 'Frecuencia', 'Documentos'];
   observacion: string = '';
   hoy: Date = new Date();
   personDetalle: any = {};
@@ -19,10 +17,10 @@ export class DetalleUsuarioComponent implements OnInit {
   totaldolares: number = 0;
   vista: boolean = false;
   historico: any = [];
+  role: string = '';
   // rowSelect: any = { };
-  selectedFile: any = null;
-  isEditing: boolean = false;
-  selectedEstado: string = '';
+  isModalOpen = false;
+
   rowSelect = {
     "nombre2": "Melina",
     "apellido2": "Metritian Cover",
@@ -51,23 +49,30 @@ export class DetalleUsuarioComponent implements OnInit {
   }
 
   obtenerDetalleUsuario() {
-    const clienteData = localStorage.getItem('cliente');
+    const clienteData = localStorage.getItem('userData');
     const cliente = clienteData ? JSON.parse(clienteData) : null;
+    this.role = cliente.rol_id;
+    console.log(cliente.id);
     const params = {
-      id: cliente.user_id
+      id: cliente.id
     };
 
     this.detalleUsuarioService.obtenerDetalleUsuario(params).subscribe(
       (response: any) => {
         this.personDetalle = response.cliente.usuario;
-        this.personInversion = response.cliente.inversiones;
+        this.personInversion = response.cliente.inversiones.filter((item: any) => item.estado === 'Vigente');
 
         this.personInversion.forEach((item: any) => {
+          console.log('item', item.monto_soles);
+          console.log('item', item.monto_dolares);
 
           this.totalsoles += parseFloat(item.monto_soles);
           this.totaldolares += parseFloat(item.monto_dolares);
         }
         );
+
+        console.log('response', response.cliente.usuario);
+        console.log('response', response.cliente.inversiones);
       },
       (error: any) => {
         console.log('error', error);
@@ -82,7 +87,9 @@ export class DetalleUsuarioComponent implements OnInit {
     // if(element.nombre2 !== "" && element.nombre3 !== ""){
     //   this.vista = true
     // }
+    console.log('element', element);
     if (element.nombre2 !== "" && element.nombre3 !== "") {
+      console.log('entreeeeeeeee');
       this.vista = true;
       this.rowSelect = element;
     }
@@ -100,7 +107,7 @@ export class DetalleUsuarioComponent implements OnInit {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'Documento'; // Nombre del archivo
+    a.download = 'CE82_D14A M11B_TF_LOPEZ LOZANO RENZO FERNANDO'; // Nombre del archivo
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -130,6 +137,8 @@ export class DetalleUsuarioComponent implements OnInit {
   agregarObservacion() {
     const userData = localStorage.getItem('userData');
     const user = userData ? JSON.parse(userData) : null;
+    console.log(user.id);
+    console.log(this.observacion);
 
     if (this.observacion.trim()) {
 
@@ -158,105 +167,94 @@ export class DetalleUsuarioComponent implements OnInit {
   obtenerHistorico() {
     const userData = localStorage.getItem('userData');
     const user = userData ? JSON.parse(userData) : null;
+    console.log(user.id);
     const params =
     {
       "userId": user.id,
     }
     this.detalleUsuarioService.obtenerHistorico(params).subscribe(
       (response: any) => {
+        console.log('Historico', response);
         this.historico = response.data
+        console.log('Historico', this.historico);
       },
       (error: any) => {
         console.log('error', error);
       }
     );
   }
-  enableEditMode(): void {
-    this.isEditing = true;
-  }
 
-  saveEdit(element: any): void {
-    const params = {
-      "id": element.id,
-      "estado": this.selectedEstado
+  getBackgroundColor(estado: string): string {
+    switch (estado) {
+      case 'Vigente':
+        return '#a3f7bf'; // Color para "Activo"
+      case 'Garantia':
+        return '#ff4d4d'; // Color para "Inactivo"
+      case 'Vencido':
+        return '#ffd700'; // Color para "Pendiente"
+      case 'No_Renovado':
+        return '#ffd700'; // Color para "Pendiente"
+      case 'Renovacion_Anticipada':
+        return '#ffd700'; // Color para "Pendiente"
+      case 'Cancelado':
+        return '#ffd700'; // Color para "Pendiente"
+      default:
+        return '#d3d3d3'; // Color por defecto
     }
-    this.detalleUsuarioService.updateEstado(params).subscribe(
+  }
+
+  getBackgroundColorBoton(estado: string): string {
+    switch (estado) {
+      case 'Vigente':
+        return '#4CAF50'; // Color para "Activo"
+      case 'Garantia':
+        return '#ff4d4d'; // Color para "Inactivo"
+      case 'Vencido':
+        return '#ffd700'; // Color para "Pendiente"
+      case 'No_Renovado':
+        return '#ffd700'; // Color para "Pendiente"
+      case 'Renovacion_Anticipada':
+        return '#ffd700'; // Color para "Pendiente"
+      case 'Cancelado':
+        return '#ffd700'; // Color para "Pendiente"
+      default:
+        return '#d3d3d3'; // Color por defecto
+    }
+  }
+  openModal(): void {
+    console.log("modal")
+    this.isModalOpen = true;
+  }
+
+  closeModal(): void {
+    this.isModalOpen = false;
+  }
+
+  guardarPassword(password: string): void {
+    console.log('Nueva Contraseña:', password);
+
+    const userData = localStorage.getItem('userData');
+    const user = userData ? JSON.parse(userData) : null;
+    console.log(user.id);
+    const params =
+    {
+      "userId": user.id,
+      "password": password
+    }
+    this.detalleUsuarioService.updatePassword(params).subscribe(
       (response: any) => {
-        this.obtenerDetalleUsuario();
-        this.toastr.success('Estado cambiado correctamente!', 'Index!');
-        this.isEditing = false;
+        console.log('response', response);
+        this.toastr.success('Contraseña cambiada correctamente!', 'Index!');
+        this.closeModal();
 
       },
       (error: any) => {
-        this.toastr.error('No se pudo cambiar el estado correctamente!', 'Index!');
+        this.toastr.error('Error al cambiar contraseña!', 'Index!');
+        console.log('error', error);
       }
     );
+
   }
 
-  cancelEdit(element: any): void {
-    // Opción para cancelar edición (podrías restaurar el estado original si lo guardas antes)
-    this.isEditing = false;
-  }
-
-  onStateChange(event: any): void {
-    this.selectedEstado = event.target.value;
-  }
-  ActualizarDocumento() {
-    this.updateDocument = true;
-    console.log('Actualizar documento');
-  }
-
-  cancelUpdate(element: any): void {
-    // Opción para cancelar edición (podrías restaurar el estado original si lo guardas antes)
-    this.updateDocument = false;
-  }
-
-  saveUpdate(element: any): void {
-    this.updateDocument = false;
-
-    const params = {
-      id: element.id,
-      documento: this.selectedFile?.contenido,
-      nombre_documento: this.selectedFile?.nombre,
-      tipo_documento: this.selectedFile?.tipo
-    };
-
-    this.detalleUsuarioService.updateDocumento(params).subscribe(
-      (response: any) => {
-        this.personDetalle = null;
-        this.totalsoles = 0;
-        this.totaldolares = 0;
-        this.toastr.success('Documento cambiado correctamente!', 'Index!');
-        this.obtenerDetalleUsuario();
-        this.updateDocument = false;
-
-      },
-      (error: any) => {
-        this.toastr.error('No se pudo cambiar el Documento correctamente!', 'Index!');
-      }
-    );
-  }
-
-  async onFileSelected(event: any) {
-    const file = event.target.files[0];
-    // Convertir el archivo a base64
-    const base64 = await this.convertFileToBase64(file);
-    this.selectedFile = {
-      contenido: base64,
-      nombre: file.name,
-      tipo: file.type
-    };
-
-    console.log('Archivo seleccionado:', this.selectedFile);
-  }
-
-  convertFileToBase64(file: File): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = error => reject(error);
-    });
-  }
 
 }

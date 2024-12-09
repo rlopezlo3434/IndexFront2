@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { clippingParents } from '@popperjs/core';
 import { ReporteService } from './reporte.service';
+import { ToastrService } from 'ngx-toastr';
+
+
 @Component({
   selector: 'app-reporte',
   templateUrl: './reporte.component.html',
@@ -27,7 +30,7 @@ export class ReporteComponent implements OnInit {
 
   selectedFile: any = null;
 
-  constructor(private reportService: ReporteService) {
+  constructor(private reportService: ReporteService, private toastr: ToastrService) {
 
   }
   ngOnInit(): void {
@@ -39,7 +42,7 @@ export class ReporteComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       phone: new FormControl('', Validators.required),
       fecha_nacimiento: new FormControl('', Validators.required),
-      estado: new FormControl('', Validators.required),
+      estado: new FormControl({ value: 'Vigente', disabled: true }, Validators.required),
       tipoInversion: new FormControl('', Validators.required),
       fecha_inicio: new FormControl('', Validators.required),
       fecha_vencimiento: new FormControl('', Validators.required),
@@ -66,7 +69,7 @@ export class ReporteComponent implements OnInit {
     });
 
     this.obtenerClientes();
-
+    this.obtenerReporte();
   }
 
 
@@ -93,10 +96,12 @@ export class ReporteComponent implements OnInit {
       this.reportService.registrarCliente(resultado).subscribe({
         next: (response: any) => {
           console.log('registrado', response);
+          this.toastr.success('Registro de Cliente e Inversión Exitoso!', 'Index!');
           this.clienteForm.reset();
         },
         error: (error) => {
           console.error('Login failed', error);
+          this.toastr.error('Error en el registro del Cliente e Inversión!', 'Index!');
         }
       });
     }
@@ -111,6 +116,17 @@ export class ReporteComponent implements OnInit {
       next: (response: any) => {
         this.clientes = response;
         console.log('clientes', response);
+      },
+      error: (error) => {
+        console.error('Login failed', error);
+      }
+    });
+  }
+
+  obtenerReporte(): void {
+    this.reportService.obtenerReporte().subscribe({
+      next: (response: any) => {
+        console.log('reporte', response);
       },
       error: (error) => {
         console.error('Login failed', error);

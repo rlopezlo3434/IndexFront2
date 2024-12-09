@@ -30,6 +30,13 @@ export class ReporteService {
     );
   }
 
+  obtenerReporte(): Observable<any> {
+    return this.http.post(
+      this.apiUrl + '/clientes',
+      { withCredentials: true } // Incluye las credenciales en la solicitud
+    );
+  }
+
   registrarInversion(params: any): Observable<any> {
     console.log('params', params);
     return this.http.post(

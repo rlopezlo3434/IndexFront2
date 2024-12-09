@@ -1,0 +1,32 @@
+<div class="empresa-container">
+    <h2 class="title">Administrar Empresas</h2>
+    
+    <!-- Formulario para crear o actualizar una empresa -->
+    <div class="empresa-form">
+      <input #empresaNombre type="text" [value]="empresa.nombre" placeholder="Nombre de la empresa" class="input-field"  />
+      <button (click)="guardarEmpresa(empresaNombre)" class="btn-submit">{{ empresa.id ? 'Actualizar' : 'Crear' }} Empresa</button>
+    </div>
+  
+    <h3 class="sub-title">Lista de Empresas</h3>
+    <table class="empresa-table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Nombre con Guiones</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let emp of empresas">
+          <td>{{ emp.nombre }}</td>
+          <td>{{ convertirNombreConGuiones(emp.nombre) }}</td>
+          <td>
+            <!-- (click)="editarEmpresa(emp)" -->
+            <button (click)="editarEmpresa(emp)" class="btn-edit">Editar</button>
+            <button (click)="eliminarEmpresa(emp.id)" class="btn-delete">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

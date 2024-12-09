@@ -4,6 +4,7 @@ import { ResumenService } from './resumen.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { ExporService } from 'src/app/Services/expor.service';
 
 @Component({
   selector: 'app-resumen',
@@ -14,7 +15,7 @@ export class ResumenComponent implements OnInit {
   @ViewChild('sidenav') sidenav!: MatSidenav;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  displayedColumns: string[] = ['nombre', 'estado', 'empresa', 'fechas', 'monto', 'frecuencia', 'rentabilidad'];
+  displayedColumns: string[] = ['nombre', 'estado', 'empresa', 'fechasI', 'fechasF', 'monto', 'frecuencia', 'rentabilidad'];
   dataSource = new MatTableDataSource<any>([]);
   totalsoles: number = 0;
   totaldolares: number = 0;
@@ -22,7 +23,7 @@ export class ResumenComponent implements OnInit {
   totalClientes2: number = 0;
   hoy: Date = new Date();
 
-  constructor(private resumenService: ResumenService, private router: Router) { }
+  constructor(private resumenService: ResumenService, private router: Router, private exportService: ExporService) { }
 
   ngOnInit(): void {
     this.obtenerClientes();
@@ -39,6 +40,7 @@ export class ResumenComponent implements OnInit {
       "fechaVencInicio": "",
       "fechaVencHasta": "",
       "empresa": "",
+      "estado": "",
       "asesor": user.id
     }
 
@@ -74,7 +76,14 @@ export class ResumenComponent implements OnInit {
     this.dataSource.paginator?.firstPage(); // Regresa a la primera página si es necesario
   }
 
-  aplicarFiltros(fechaInicioDesde: string, fechaInicioHasta: string, fechaVencimientoDesde: string, fechaVencimientoHasta: string, moneda: string, empresa: string): void {
+  exportExcel(){
+    this.resumenService.exportarExcel().subscribe(response => {
+      console.log('response', response);
+      this.exportService.exportDataToExcel(response);
+    });
+  }
+
+  aplicarFiltros(fechaInicioDesde: string, fechaInicioHasta: string, fechaVencimientoDesde: string, fechaVencimientoHasta: string, moneda: string, empresa: string, estado: string): void {
     const userData = localStorage.getItem('userData');
     const user = userData ? JSON.parse(userData) : null;
     console.log(user.id);
@@ -85,6 +94,7 @@ export class ResumenComponent implements OnInit {
       "fechaVencInicio": fechaVencimientoDesde ? fechaVencimientoDesde : "",
       "fechaVencHasta": fechaVencimientoHasta ? fechaVencimientoHasta : "",
       "empresa": empresa ? empresa : "",
+      "estado": estado ? estado : "",
       "asesor": user.id
     }
 

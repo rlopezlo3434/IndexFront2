@@ -1,17 +1,18 @@
 <div class="container">
     <!-- Header -->
     <div class="header">
-        <div style="display: flex; align-items: center;" (click)="backpage()">
-            <mat-icon>arrow_back_ios</mat-icon>
-            <a href="/dashboard/resumen">Atrás</a>
-        </div>
+
         <h2>{{ personDetalle.nombre }} {{ personDetalle.apellido }}</h2>
         <div class="status">
+            <div class="botonchange" (click)="openModal()">
+                Cambiar Contraseña
+            </div>
             <div
                 style="display: flex; align-items: center; justify-content: center; gap: 5px; background-color: #a3f7bf; text-align: center; padding: 5px 10px; border-radius: 10px;">
                 <div style=" background: #4CAF50; width: 8px; height: 8px; border-radius: 50%;"></div>
                 <div>Activo</div>
             </div>
+
             <!-- <div
                 style="display: flex; align-items: center; justify-content: center; gap: 5px; background-color: #fca311; text-align: center; padding: 5px 10px; border-radius: 10px;">
                 <div style=" background: #ff5722; width: 8px; height: 8px; border-radius: 50%;"></div>
@@ -20,6 +21,19 @@
         </div>
     </div>
 
+    <div id="modalCambiarContraseña" class="modal" [class.show]="isModalOpen">
+        <div class="modal-content">
+            <span class="close" (click)="closeModal()">&times;</span>
+            <h2>Cambiar Contraseña</h2>
+            <form>
+                <label for="nuevaPassword">Nueva Contraseña:</label>
+                <input type="password" id="nuevaPassword" #passwordInput name="nuevaPassword" required />
+                <br /><br />
+            </form>
+            <br>
+            <button class="UpdatePassword" type="button" (click)="guardarPassword(passwordInput.value)">Guardar</button>
+        </div>
+    </div>
     <!-- Sections -->
     <div class="section">
         <div>
@@ -77,50 +91,32 @@
         <div style="font-size: 25px; color: #DFAC2C; margin-right: 70px;">
             Inversiones
         </div>
-        <button type="submit" class="buttonNewCliente" (click)="redirigirAReporte()">Nueva inversión</button>
     </div>
-    <!-- <mat-icon>create</mat-icon> -->
     <div class="table-container">
         <table mat-table [dataSource]="personInversion" class="mat-elevation-z2">
             <!-- Nombre Column -->
-            <ng-container matColumnDef="Editar">
-                <th mat-header-cell *matHeaderCellDef> Editar </th>
-                <td mat-cell *matCellDef="let element" style="cursor: pointer;" (click)="enableEditMode()">
-                    <mat-icon>create</mat-icon>
-                </td>
-            </ng-container>
             <ng-container matColumnDef="Estado">
                 <th mat-header-cell *matHeaderCellDef> Estado </th>
-                <td mat-cell *matCellDef="let element">
-                    <div *ngIf="!isEditing" style="padding: 10px; display: flex; flex-direction: column; gap: 10px;">
-                        <div
-                            style="display: flex; align-items: center; justify-content: center; gap: 5px; background-color: #fca311; text-align: center; padding: 3px; border-radius: 10px;">
-                            <div class="por-vencer"></div>
-                            <div>{{ element.estado }}</div>
-                        </div>
-                        <div *ngIf="isNearExpiration(element.fecha_vencimiento)"
-                            style="display: flex; align-items: center; justify-content: center; gap: 5px; background-color: #fca311; text-align: center; padding: 3px; border-radius: 10px;">
-                            <div class="por-vencer"></div>
-                            <div>Por vencer</div>
-                        </div>
+                <td mat-cell *matCellDef="let element"
+                    style="display: flex; gap: 10px; align-items: center; justify-content: center; padding: 20px;">
+                    <div *ngIf="element.estado" [ngStyle]="{
+                        'background-color': getBackgroundColor(element.estado),
+                        'display': 'flex',
+                        'align-items': 'center',
+                        'justify-content': 'center',
+                        'gap': '5px',
+                        'text-align': 'center',
+                        'padding': '3px',
+                        'border-radius': '10px'
+                      }">
+                        <div [ngStyle]="{'background-color':getBackgroundColorBoton(element.estado)}"
+                            class="por-vencer"></div>
+                        <div>{{ element.estado }}</div>
                     </div>
-
-                    <div *ngIf="isEditing" style="padding: 10px; display: flex; flex-direction: column; gap: 10px;">
-                        <select class="form-control custom-select select-style" (change)="onStateChange($event)">
-                            <option value="Seleccione">Seleccione...</option>
-                            <option value="Renovacion_Anticipada">Renovación anticipada</option>
-                            <option value="Vencido">Vencido</option>
-                            <option value="No_Renovado">No Renovado</option>
-                            <option value="Cancelado">Cancelado</option>
-                            <option value="Garantia">Garantia</option>
-                            <option value="Vigente">Vigente</option>
-                        </select>
-                        <button mat-button color="primary" (click)="saveEdit(element)">
-                            Guardar
-                        </button>
-                        <button mat-button color="warn" (click)="cancelEdit(element)">
-                            Cancelar
-                        </button>
+                    <div *ngIf="isNearExpiration(element.fecha_vencimiento)"
+                        style="display: flex; align-items: center; justify-content: center; gap: 5px; background-color: #fca311; text-align: center; padding: 3px; border-radius: 10px;">
+                        <div class="por-vencer"></div>
+                        <div>Por vencer</div>
                     </div>
                 </td>
             </ng-container>
@@ -174,23 +170,8 @@
 
             <ng-container matColumnDef="Documentos">
                 <th mat-header-cell *matHeaderCellDef> Documentos </th>
-                <td mat-cell *matCellDef="let element">
-                    <div style="display: flex; align-items: center; justify-content: center;">
-                        <div>
-                            <button *ngIf="!updateDocument" class="buttonNewCliente2"
-                                (click)="descargarDocumento(element.documento, 'nombre_documento.docx')">Descargar</button>
-                            <input *ngIf="updateDocument" (change)="onFileSelected($event)" type="file">
-                            <div>
-                                <button *ngIf="updateDocument" mat-button color="primary" (click)="saveUpdate(element)">
-                                    Guardar
-                                </button>
-                                <button *ngIf="updateDocument" mat-button color="warn" (click)="cancelUpdate(element)">
-                                    Cancelar
-                                </button>
-                            </div>
-                        </div>
-                        <mat-icon style="cursor: pointer;" (click)="ActualizarDocumento()">autorenew</mat-icon>
-                    </div>
+                <td mat-cell *matCellDef="let element"> <button class="buttonNewCliente2"
+                        (click)="descargarDocumento(element.documento, 'nombre_documento.docx')">Descargar</button>
                 </td>
             </ng-container>
 
@@ -259,37 +240,5 @@
             </div>
         </div>
     </div>
-    <div style="display: flex; justify-content: space-between;">
 
-        <div style="width: 50%; margin: 20px; font-family: Arial, sans-serif;">
-            <h3>Histórico de Actividades del Asesor</h3>
-            <div id="historicoForm">
-                <div style="margin-bottom: 15px;">
-                    <label for="texto" style="display: block; margin-bottom: 5px;">Observaciones:</label>
-                    <input id="observacion" type="text" (input)="actualizarObservacion($event)" [value]="observacion"
-                        placeholder="Escribe tu observación"
-                        style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-                </div>
-                <button (click)="agregarObservacion()"
-                    style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">
-                    Agregar
-                </button>
-            </div>
-            <div id="resultado" style="margin-top: 20px;"></div>
-        </div>
-        <div style="width: 50%; margin: 20px; font-family: Arial, sans-serif; ">
-            <h3 style="margin-top: 0;">Lista de Observaciones</h3>
-            <div style=" max-height: 250px; overflow-y: auto;">
-                <ul style="list-style-type: none; padding: 0; margin: 0;">
-                    <li *ngFor="let item of historico" style="border-bottom: 1px solid #ddd; padding: 10px 0;">
-                        <p style="margin: 0; font-size: 14px;"><strong>Texto:</strong> {{ item.texto }}</p>
-                        <p style="margin: 0; font-size: 12px; color: #555;">
-                            <strong>Fecha:</strong> {{ item.created_at | date: 'short' }}
-                        </p>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-    </div>
 </div>

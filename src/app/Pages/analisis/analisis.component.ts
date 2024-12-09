@@ -176,7 +176,7 @@ export class AnalisisComponent implements OnInit {
         console.log('response', response);
 
         // Verifica que `response` tenga los datos esperados de las empresas
-        if (response && response.length >= 2) {
+        
           const empresa1 = response[0];
           const empresa2 = response[1];
 
@@ -187,13 +187,13 @@ export class AnalisisComponent implements OnInit {
               backgroundColor: ['#ff9f40', '#ff6384'], // Colores personalizados para Empresa 1
             }
           ];
+          console.log('empresa2', this.pieChartDatasetsEmpresa1);
           this.pieChartDatasetsEmpresa2 = [
             {
               data: [parseFloat(empresa2.total_monto_soles), parseFloat(empresa2.total_monto_dolares)],
               backgroundColor: ['#ff9f40', '#ff6384'], // Colores personalizados para Empresa 2
             }
           ];
-        }
       },
       (error: any) => {
         console.error('Error al obtener los datos de las empresas:', error);

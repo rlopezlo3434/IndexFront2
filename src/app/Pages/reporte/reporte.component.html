@@ -16,7 +16,7 @@
                                 placeholder="Apellido Cliente">
                         </div>
                         <div class="col-md-4 label-input">
-                            <label for="dni">Dni</label>
+                            <label for="dni">DNI/RUC</label>
                             <input formControlName="dni" type="text" class="form-control" id="dni"
                                 placeholder="DNI / CE Cliente">
                         </div>
@@ -140,11 +140,14 @@
                         <div class="col-md-6 label-input">
                             <label for="nombre">Estado</label>
                             <select formControlName="estado" class="form-control custom-select select-style" name=""
-                                id="">
-                                <option selected>Seleccione...</option>
-                                <option value="Renovado">Renovado</option>
+                                id="estado" [disabled]="true">
+                                <option value="Seleccione">Seleccione...</option>
+                                <option value="Renovacion_Anticipada">Renovación anticipada</option>
+                                <option value="Vencido">Vencido</option>
+                                <option value="No_Renovado">No Renovado</option>
                                 <option value="Cancelado">Cancelado</option>
-                                <option value="Suspendido">Suspendido</option>
+                                <option value="Garantia">Garantia</option>
+                                <option value="Vigente">Vigente</option>
                             </select>
                         </div>
                         <div class="col-md-6 label-input">
